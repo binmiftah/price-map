@@ -1,0 +1,4 @@
+project_id = "aprntfwqhjbqrcmzjqag"
+
+[functions.aggregate-prices]
+verify_jwt = false
