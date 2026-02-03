@@ -36,7 +36,7 @@ export function TopNav() {
           </div>
           <div className="flex flex-col">
             <span className="text-lg font-bold font-display tracking-tight">PriceMap</span>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground -mt-0.5">Checker</span>
+            
           </div>
         </RouterNavLink>
         
