@@ -12,7 +12,8 @@ import { LocationSelector } from "@/components/filters/LocationSelector";
 import { CategoryFilter } from "@/components/filters/CategoryFilter";
 import { ItemSelector } from "@/components/filters/ItemSelector";
 import { useSubmitPrice } from "@/hooks/usePrices";
-import { Check, Loader2 } from "lucide-react";
+import { Check, Loader2, Sparkles, Lightbulb, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const priceSchema = z.object({
   item_id: z.string().min(1, "Please select an item"),
@@ -61,13 +62,12 @@ export default function SubmitPage() {
         description: "Thank you for contributing to price transparency.",
       });
       
-      // Reset after 2 seconds
       setTimeout(() => {
         setIsSuccess(false);
         reset();
         setCategoryId(undefined);
         setLocationId("");
-      }, 2000);
+      }, 3000);
     } catch (error: any) {
       toast({
         title: "Error",
@@ -88,19 +88,26 @@ export default function SubmitPage() {
   
   if (isSuccess) {
     return (
-      <div className="animate-fade-in flex flex-col items-center justify-center py-16 text-center">
-        <div className="h-20 w-20 rounded-full bg-success/10 flex items-center justify-center mb-6">
-          <Check className="h-10 w-10 text-success" />
+      <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
+        <div className="relative mb-8">
+          <div className="h-24 w-24 rounded-3xl bg-success/10 flex items-center justify-center animate-fade-in">
+            <Check className="h-12 w-12 text-success" />
+          </div>
+          <Sparkles className="absolute -top-2 -right-2 h-8 w-8 text-highlight animate-pulse" />
         </div>
-        <h1 className="text-2xl font-bold mb-2">Price Submitted!</h1>
-        <p className="text-muted-foreground mb-6">
-          Thank you for helping build price transparency in Nigeria.
+        
+        <h1 className="text-3xl font-bold font-display mb-3 animate-fade-in">
+          Price Submitted!
+        </h1>
+        <p className="text-muted-foreground mb-8 max-w-sm animate-fade-in">
+          Thank you for helping build price transparency in Nigeria. Every contribution matters!
         </p>
-        <div className="flex gap-3">
-          <Button onClick={() => setIsSuccess(false)}>
+        
+        <div className="flex flex-col sm:flex-row gap-3 animate-fade-in">
+          <Button onClick={() => setIsSuccess(false)} className="rounded-xl h-12 px-6">
             Submit Another
           </Button>
-          <Button variant="outline" onClick={() => navigate("/browse")}>
+          <Button variant="outline" onClick={() => navigate("/browse")} className="rounded-xl h-12 px-6">
             Browse Prices
           </Button>
         </div>
@@ -109,30 +116,49 @@ export default function SubmitPage() {
   }
   
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold mb-2">Submit a Price</h1>
-        <p className="text-muted-foreground">
+    <div className="max-w-2xl mx-auto space-y-8">
+      {/* Header */}
+      <div className="text-center md:text-left">
+        <h1 className="text-3xl md:text-4xl font-bold font-display tracking-tight">
+          Submit a Price
+        </h1>
+        <p className="text-muted-foreground mt-2">
           Help others avoid overpaying by sharing prices you've seen
         </p>
       </div>
       
-      <Card>
-        <CardHeader>
-          <CardTitle>Price Information</CardTitle>
+      {/* Form Card */}
+      <Card className="overflow-hidden">
+        <div className="h-1 bg-gradient-to-r from-primary via-primary/50 to-transparent" />
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-display">Price Information</CardTitle>
           <CardDescription>
             All fields are required. Your submission is anonymous.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Step indicators */}
+            <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+              <span className="flex items-center justify-center h-5 w-5 rounded-full bg-primary text-primary-foreground font-bold">1</span>
+              <span>Category & Item</span>
+              <ArrowRight className="h-3 w-3" />
+              <span className="flex items-center justify-center h-5 w-5 rounded-full bg-muted font-bold">2</span>
+              <span>Location</span>
+              <ArrowRight className="h-3 w-3" />
+              <span className="flex items-center justify-center h-5 w-5 rounded-full bg-muted font-bold">3</span>
+              <span>Price</span>
+            </div>
+            
             {/* Category (for filtering items) */}
-            <CategoryFilter
-              value={categoryId}
-              onChange={setCategoryId}
-              label="Category"
-              showAll={false}
-            />
+            <div className="space-y-1.5">
+              <CategoryFilter
+                value={categoryId}
+                onChange={setCategoryId}
+                label="Category"
+                showAll={false}
+              />
+            </div>
             
             {/* Item */}
             <div className="space-y-1.5">
@@ -163,11 +189,11 @@ export default function SubmitPage() {
             
             {/* Price */}
             <div className="space-y-1.5">
-              <Label htmlFor="price">
+              <Label htmlFor="price" className="flex items-center gap-1">
                 Price (₦) <span className="text-destructive">*</span>
               </Label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-semibold text-muted-foreground">
                   ₦
                 </span>
                 <Input
@@ -176,7 +202,7 @@ export default function SubmitPage() {
                   step="0.01"
                   min="0"
                   placeholder="0.00"
-                  className="pl-8"
+                  className="pl-10 h-14 text-lg font-mono rounded-xl border-2"
                   {...register("price", { valueAsNumber: true })}
                 />
               </div>
@@ -187,31 +213,51 @@ export default function SubmitPage() {
             
             <Button 
               type="submit" 
-              className="w-full" 
+              className="w-full h-14 text-base font-semibold rounded-xl shadow-glow hover:shadow-glow-lg transition-all" 
               size="lg"
               disabled={submitPrice.isPending}
             >
               {submitPrice.isPending ? (
                 <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                   Submitting...
                 </>
               ) : (
-                "Submit Price"
+                <>
+                  Submit Price
+                  <ArrowRight className="h-5 w-5 ml-2" />
+                </>
               )}
             </Button>
           </form>
         </CardContent>
       </Card>
       
-      <Card className="bg-accent border-accent">
-        <CardContent className="pt-6">
-          <h3 className="font-semibold mb-2">💡 Tips for Accurate Submissions</h3>
-          <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
-            <li>Submit prices you've actually seen or paid</li>
-            <li>Be as specific as possible with the location</li>
-            <li>Include the most recent price if it has changed</li>
-          </ul>
+      {/* Tips Card */}
+      <Card className="bg-accent/50 border-accent">
+        <CardContent className="p-5">
+          <div className="flex items-start gap-4">
+            <div className="h-10 w-10 rounded-xl bg-highlight/20 flex items-center justify-center flex-shrink-0">
+              <Lightbulb className="h-5 w-5 text-highlight-foreground" />
+            </div>
+            <div>
+              <h3 className="font-semibold font-display mb-2">Tips for Accurate Submissions</h3>
+              <ul className="text-sm text-muted-foreground space-y-1.5">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
+                  Submit prices you've actually seen or paid
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
+                  Be as specific as possible with the location
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
+                  Include the most recent price if it has changed
+                </li>
+              </ul>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>

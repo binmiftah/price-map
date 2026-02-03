@@ -2,47 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Local Price Checker Design System - Teal/Green primary with clean neutral colors */
+/* Local Price Checker Design System - Bold, distinctive Nigerian-inspired design */
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 220 20% 10%;
+    --background: 48 20% 97%;
+    --foreground: 180 25% 8%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 10%;
+    --card-foreground: 180 25% 8%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 10%;
+    --popover-foreground: 180 25% 8%;
 
     --primary: 168 76% 32%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 180 15% 95%;
-    --secondary-foreground: 220 20% 20%;
+    --secondary: 168 20% 92%;
+    --secondary-foreground: 168 50% 20%;
 
-    --muted: 210 20% 96%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 180 10% 94%;
+    --muted-foreground: 180 10% 40%;
 
-    --accent: 168 50% 92%;
-    --accent-foreground: 168 76% 25%;
+    --accent: 168 50% 90%;
+    --accent-foreground: 168 76% 22%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 90%;
-    --input: 220 13% 90%;
+    --border: 180 15% 88%;
+    --input: 180 15% 88%;
     --ring: 168 76% 32%;
 
     --radius: 0.75rem;
 
-    /* Custom colors for the app */
-    --success: 142 76% 36%;
+    /* Extended palette */
+    --success: 160 84% 35%;
     --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
+    --warning-foreground: 38 92% 12%;
     --info: 199 89% 48%;
     --info-foreground: 0 0% 100%;
+
+    /* Custom decorative colors */
+    --highlight: 45 93% 58%;
+    --highlight-foreground: 45 93% 12%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -55,42 +59,45 @@
   }
 
   .dark {
-    --background: 220 20% 8%;
-    --foreground: 0 0% 95%;
+    --background: 180 20% 6%;
+    --foreground: 48 20% 96%;
 
-    --card: 220 20% 12%;
-    --card-foreground: 0 0% 95%;
+    --card: 180 20% 10%;
+    --card-foreground: 48 20% 96%;
 
-    --popover: 220 20% 12%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 180 20% 10%;
+    --popover-foreground: 48 20% 96%;
 
-    --primary: 168 76% 42%;
+    --primary: 168 70% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 18%;
-    --secondary-foreground: 0 0% 90%;
+    --secondary: 180 15% 16%;
+    --secondary-foreground: 168 30% 80%;
 
-    --muted: 220 15% 18%;
-    --muted-foreground: 220 10% 55%;
+    --muted: 180 15% 15%;
+    --muted-foreground: 180 10% 55%;
 
-    --accent: 168 30% 20%;
-    --accent-foreground: 168 76% 70%;
+    --accent: 168 35% 18%;
+    --accent-foreground: 168 60% 75%;
 
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 20%;
-    --input: 220 15% 20%;
-    --ring: 168 76% 42%;
+    --border: 180 15% 18%;
+    --input: 180 15% 18%;
+    --ring: 168 70% 45%;
 
-    --sidebar-background: 220 20% 10%;
+    --highlight: 45 90% 55%;
+    --highlight-foreground: 45 93% 12%;
+
+    --sidebar-background: 180 20% 8%;
     --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 168 76% 42%;
+    --sidebar-primary: 168 70% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 168 30% 18%;
-    --sidebar-accent-foreground: 168 76% 70%;
-    --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 168 76% 42%;
+    --sidebar-accent: 168 30% 16%;
+    --sidebar-accent-foreground: 168 60% 75%;
+    --sidebar-border: 180 15% 16%;
+    --sidebar-ring: 168 70% 45%;
   }
 }
 
@@ -101,6 +108,54 @@
 
   body {
     @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "ss02", "cv01";
+  }
+
+  /* Custom selection colors */
+  ::selection {
+    background: hsl(var(--primary) / 0.2);
+    color: hsl(var(--primary));
+  }
+}
+
+/* Custom component styles */
+@layer components {
+  /* Glass morphism effect */
+  .glass {
+    @apply bg-card/80 backdrop-blur-xl border border-border/50;
+  }
+
+  /* Bold section headers */
+  .section-header {
+    @apply text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground;
+  }
+
+  /* Accent stripe decoration */
+  .accent-stripe {
+    @apply relative before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-primary before:rounded-full;
+    padding-left: 1rem;
+  }
+
+  /* Price highlight */
+  .price-tag {
+    @apply inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary font-bold;
+  }
+
+  /* Floating label style */
+  .floating-badge {
+    @apply absolute -top-2 -right-2 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-full;
+  }
+
+  /* Stat card with gradient */
+  .stat-card {
+    @apply relative overflow-hidden rounded-2xl p-6;
+    background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%);
+  }
+
+  /* Decorative dot pattern */
+  .dot-pattern {
+    background-image: radial-gradient(hsl(var(--primary) / 0.15) 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 }
 
@@ -112,5 +167,61 @@
   
   .safe-bottom {
     padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent-foreground;
+  }
+
+  /* Smooth hover lift */
+  .hover-lift {
+    @apply transition-all duration-300 ease-out;
+  }
+  .hover-lift:hover {
+    @apply -translate-y-1 shadow-lg;
+  }
+
+  /* Asymmetric border radius */
+  .rounded-blob {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Stagger animation delays */
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-5 { animation-delay: 0.5s; }
+}
+
+/* Custom scrollbar for larger screens */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
   }
 }
