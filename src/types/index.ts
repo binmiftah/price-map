@@ -1,7 +1,7 @@
 export interface Location {
   id: string;
   name: string;
-  type: 'country' | 'state' | 'city' | 'area';
+  type: 'country' | 'state' | 'city' | 'area' | 'lga' | 'market';
   parent_id: string | null;
   created_at: string;
 }

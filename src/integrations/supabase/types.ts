@@ -150,6 +150,50 @@ export type Database = {
           },
         ]
       }
+      pending_locations: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          parent_id: string | null
+          reviewed_at: string | null
+          status: string
+          suggested_by_ip: string | null
+          type: string
+          verification_result: Json | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          parent_id?: string | null
+          reviewed_at?: string | null
+          status?: string
+          suggested_by_ip?: string | null
+          type?: string
+          verification_result?: Json | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          parent_id?: string | null
+          reviewed_at?: string | null
+          status?: string
+          suggested_by_ip?: string | null
+          type?: string
+          verification_result?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pending_locations_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "locations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       price_submissions: {
         Row: {
           created_at: string
