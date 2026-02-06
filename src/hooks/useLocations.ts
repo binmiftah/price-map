@@ -100,9 +100,9 @@ export function useCities(stateId?: string) {
   });
 }
 
-export function useAreas(cityId?: string) {
+export function useMarkets(cityId?: string) {
   return useQuery({
-    queryKey: ["areas", cityId],
+    queryKey: ["markets", cityId],
     queryFn: async () => {
       if (!cityId) return [];
       
@@ -110,7 +110,7 @@ export function useAreas(cityId?: string) {
         .from("locations")
         .select("*")
         .eq("parent_id", cityId)
-        .eq("type", "area")
+        .eq("type", "market")
         .order("name");
       
       if (error) throw error;
@@ -118,4 +118,9 @@ export function useAreas(cityId?: string) {
     },
     enabled: !!cityId,
   });
+}
+
+// Legacy - kept for backwards compatibility
+export function useAreas(cityId?: string) {
+  return useMarkets(cityId);
 }
